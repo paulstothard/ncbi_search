@@ -5,18 +5,18 @@ if [ ! -d test_output ]; then
 fi
 
 perl ncbi_search.pl -q 'leptin AND homo sapiens[ORGN]' \
-        -o test_output/results1.txt -d protein -r fasta -m 100 -v
+        -o test_output/results1.txt -d protein -r fasta -m 10 -v
 
 perl ncbi_search.pl -q 'dysphagia AND homo sapiens[ORGN]' \
-        -o test_output/results2.txt -d pubmed -r uilist -m 100 -v
+        -o test_output/results2.txt -d pubmed -r uilist -m 10 -v
 
 #gp is for GenPept
 perl ncbi_search.pl -q telomere -o test_output/results3.txt -d protein -r gp \
-        -m 50 -v
+        -m 5 -v
 
 #gb is for GenBank
 perl ncbi_search.pl -q telomere -o test_output/results3.txt -d nucleotide \
-        -r gb -m 50 -v
+        -r gb -m 5 -v
 
 #compare new output to sample output
 new_output=test_output
