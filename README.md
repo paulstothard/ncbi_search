@@ -1,8 +1,8 @@
 # ncbi\_search
 FILE: ncbi\_search.pl  
 AUTH: Paul Stothard <stothard@ualberta.ca>  
-DATE: August 20, 2008  
-VERS: 1.0
+DATE: April 18, 2020  
+VERS: 1.2
 
 This script uses NCBI's Entrez Programming Utilities to perform searches of
 NCBI databases. This script can return either the complete database records, or
@@ -106,7 +106,7 @@ ___
 ___
 ### Supported -r option values:
 
-##### Record Type (-r value) 
+The supported -r option values are grouped by database type (i.e. -d option value) below. The name of each format is followed by the corresponding -r option value in parentheses. A value of _null_ indicates that the -r option should be omitted in order to obtain that output format.  
 
 #####  All Databases  
   * Document summary (docsum)  
@@ -154,7 +154,7 @@ ___
 #####  Additional option for d = nuccore and protein  
   * Feature table (ft)  
 
-#####  Additional option for d = nuccore  
+#####  Additional options for d = nuccore  
   * GenBank flat file with full sequence (gbwithparts)  
   * CDS nucleotide FASTA (fasta_cds_na)  
   * CDS protein FASTA (fasta_cds_aa)  
