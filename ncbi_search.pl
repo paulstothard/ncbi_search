@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #FILE: ncbi_search.pl
 #AUTH: Paul Stothard (stothard@ualberta.ca)
-#DATE: August 20, 2008
+#DATE: April 18, 2020
 #VERS: 1.2
 
 use warnings;
