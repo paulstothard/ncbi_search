@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #FILE: ncbi_search.pl
 #AUTH: Paul Stothard (stothard@ualberta.ca)
 #DATE: April 18, 2020
