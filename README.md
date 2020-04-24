@@ -40,10 +40,10 @@ an accession number:
 
 ```
 perl ncbi_search.pl -q 'NC_045512[Accession]' \
-        -o NC_045512.gbk \
-        -d nuccore \
-        -r gbwithparts \
-        -v
+-o NC_045512.gbk \
+-d nuccore \
+-r gbwithparts \
+-v
 ```
 
 Download the protein sequences encoded by a genome, using the genome's
@@ -51,10 +51,10 @@ accession number:
 
 ```
 perl ncbi_search.pl -q 'NC_012920.1[Accession]' \
-        -o AL513382.1.faa \
-        -d nuccore \
-        -r fasta_cds_aa \
-        -v
+-o AL513382.1.faa \
+-d nuccore \
+-r fasta_cds_aa \
+-v
 ```
 
 Download multiple genomes using an accession number range, and save each genome
@@ -62,11 +62,11 @@ to a file named after its accession number:
 
 ```
 perl ncbi_search.pl -q 'NC_009925:NC_009934[Accession]' \
-        -o outdir1 \
-        -d nuccore \
-        -r gbwithparts \
-        -s \
-        -v
+-o outdir1 \
+-d nuccore \
+-r gbwithparts \
+-s \
+-v
 ```
 
 Download 10 coronavirus genomes from the RefSeq collection, and save each
@@ -74,42 +74,42 @@ genome to a separate file:
 
 ```
 perl ncbi_search.pl -q 'coronavirus[Organism] AND nucleotide genome[Filter] AND refseq[Filter]' \
-        -o outdir2 \
-        -d nuccore \
-        -r gbwithparts \
-        -m 10 \
-        -s \
-        -v
+-o outdir2 \
+-d nuccore \
+-r gbwithparts \
+-m 10 \
+-s \
+-v
 ```
 
 Download 10 abstracts from PubMed using an author name:
 
 ```
 perl ncbi_search.pl -q 'Stothard P[Author]' \
-        -o abstracts.txt \
-        -d pubmed \
-        -r abstract \
-        -m 10 \
-        -v
+-o abstracts.txt \
+-d pubmed \
+-r abstract \
+-m 10 \
+-v
 ```
 
 Download information on the genes located in a genome region of interest:
 
 ```
 perl ncbi_search.pl -q 'homo sapiens[Organism] AND 17[Chromosome] AND 7614064:7833711[Base position] AND GRCh38.p13[Assembly name]' \
-        -o gene_list.txt \
-        -d gene \
-        -r gene_table \
-        -v
+-o gene_list.txt \
+-d gene \
+-r gene_table \
+-v
 ```
 
 Download information about a gene of interest:
 
 ```
 perl ncbi_search.pl -q 'homo sapiens[Organism] AND PRNP[Gene name]' \
-        -o gene_info.txt \
-        -d gene \
-        -v
+-o gene_info.txt \
+-d gene \
+-v
 ```
 
 Download information about health-affecting variants for a genome region of
@@ -117,10 +117,10 @@ interest:
 
 ```
 perl ncbi_search.pl -q '17[Chromosome] AND 7614064:7620000[Base Position]' \
-        -o clinvar_info.xml \
-        -d clinvar \
-        -r clinvarset \
-        -v
+-o clinvar_info.xml \
+-d clinvar \
+-r clinvarset \
+-v
 ```
 
 ___
