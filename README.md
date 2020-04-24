@@ -38,7 +38,7 @@ USAGE:
 Download a sequence in GenBank format (with the full sequence included), using
 an accession number:
 
-```
+```bash
 perl ncbi_search.pl -q 'NC_045512[Accession]' \
 -o NC_045512.gbk \
 -d nuccore \
@@ -49,7 +49,7 @@ perl ncbi_search.pl -q 'NC_045512[Accession]' \
 Download the protein sequences encoded by a genome, using the genome's
 accession number:
 
-```
+```bash
 perl ncbi_search.pl -q 'NC_012920.1[Accession]' \
 -o AL513382.1.faa \
 -d nuccore \
@@ -60,7 +60,7 @@ perl ncbi_search.pl -q 'NC_012920.1[Accession]' \
 Download multiple genomes using an accession number range, and save each genome
 to a file named after its accession number:
 
-```
+```bash
 perl ncbi_search.pl -q 'NC_009925:NC_009934[Accession]' \
 -o outdir1 \
 -d nuccore \
@@ -69,33 +69,33 @@ perl ncbi_search.pl -q 'NC_009925:NC_009934[Accession]' \
 -v
 ```
 
-Download 10 coronavirus genomes from the RefSeq collection, and save each
+Download 5 coronavirus genomes from the RefSeq collection, and save each
 genome to a separate file:
 
-```
+```bash
 perl ncbi_search.pl -q 'coronavirus[Organism] AND nucleotide genome[Filter] AND refseq[Filter]' \
 -o outdir2 \
 -d nuccore \
 -r gbwithparts \
--m 10 \
+-m 5 \
 -s \
 -v
 ```
 
-Download 10 abstracts from PubMed using an author name:
+Download 5 abstracts from PubMed using an author name:
 
-```
+```bash
 perl ncbi_search.pl -q 'Stothard P[Author]' \
 -o abstracts.txt \
 -d pubmed \
 -r abstract \
--m 10 \
+-m 5 \
 -v
 ```
 
 Download information on the genes located in a genome region of interest:
 
-```
+```bash
 perl ncbi_search.pl -q 'homo sapiens[Organism] AND 17[Chromosome] AND 7614064:7833711[Base position] AND GRCh38.p13[Assembly name]' \
 -o gene_list.txt \
 -d gene \
@@ -105,7 +105,7 @@ perl ncbi_search.pl -q 'homo sapiens[Organism] AND 17[Chromosome] AND 7614064:78
 
 Download information about a gene of interest:
 
-```
+```bash
 perl ncbi_search.pl -q 'homo sapiens[Organism] AND PRNP[Gene name]' \
 -o gene_info.txt \
 -d gene \
@@ -115,12 +115,47 @@ perl ncbi_search.pl -q 'homo sapiens[Organism] AND PRNP[Gene name]' \
 Download information about health-affecting variants for a genome region of
 interest:
 
-```
+```bash
 perl ncbi_search.pl -q '17[Chromosome] AND 7614064:7620000[Base Position]' \
 -o clinvar_info.xml \
 -d clinvar \
 -r clinvarset \
 -v
+```
+Download a sequence record for each accession number in a file of accession
+numbers:
+
+```bash
+#preparing sample file of accession numbers
+echo $'NP_776246.1\nNP_001073369.1\nXP_006724594.1\nNP_995328.2\nNP_115906.3\n' \
+> accessions.txt
+
+#performing search for each accession using xargs
+cat accessions.txt | xargs -t -I{} \
+perl ncbi_search.pl -q '{}[Accession]' \
+-o {}.fasta \
+-d protein \
+-r fasta \
+-v
+```
+
+Download sequences in fasta format and then save each sequence as a separate
+file:
+
+```bash
+#download fasta file containing multiple sequences
+perl ncbi_search.pl -q 'coronavirus[Organism] AND nucleotide genome[Filter] AND refseq[Filter]' \
+-o sequences.fasta \
+-d nuccore \
+-r fasta \
+-m 5 \
+-v
+
+#create separate file for each sequence
+outputdir=output_directory/
+mkdir -p "$outputdir"
+awk '/^>/ {OUT=substr($0,2); split(OUT, a, " "); sub(/[^A-Za-z_0-9\.\-]/, "", a[1]); OUT = "'"$outputdir"'" a[1] ".fa"}; OUT {print >>OUT; close(OUT)}' \
+sequences.fasta
 ```
 
 ___
