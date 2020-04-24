@@ -251,7 +251,7 @@ USAGE:
   -q [STRING]     : Entrez query text (Required).
   -o [FILE]       : output file to create (Required). If the -s option is used, 
                     this is the output directory to create.
-  -d [STRING]     : name of the NCBI database to search, such as 'nucleotide',
+  -d [STRING]     : name of the NCBI database to search, such as 'nuccore',
                     'protein', or 'gene' (Required).
   -r [STRING]     : the type of information to download. For sequences, 'fasta'
                     is typically specified. The accepted formats depend on the
@@ -266,8 +266,8 @@ USAGE:
   -h              : show this message (Optional).
 
 EXAMPLE:
-   perl ncbi_search.pl -q 'dysphagia AND homo sapiens[ORGN]' \\
-     -o results.txt -d pubmed -r uilist -m 100
+   perl ncbi_search.pl -q 'NC_045512[Accession]' \\
+     -o NC_045512.gbk -d nuccore -r gbwithparts
 
 BLOCK
 }
