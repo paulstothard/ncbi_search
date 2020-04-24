@@ -103,7 +103,7 @@ perl ncbi_search.pl -q 'homo sapiens[Organism] AND 17[Chromosome] AND 7614064:78
         -v
 ```
 
-Download detailed information about a gene of interest:
+Download information about a gene of interest:
 
 ```
 perl ncbi_search.pl -q 'homo sapiens[Organism] AND PRNP[Gene name]' \
