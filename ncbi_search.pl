@@ -256,7 +256,7 @@ USAGE:
    perl ncbi_search.pl [-arguments]
 
   -q [STRING]     : Entrez query text (Required).
-  -o [FILE]       : output file to create (Required). If the -s option is used, 
+  -o [FILE]       : output file to create (Required). If the -s option is used,
                     this is the output directory to create.
   -d [STRING]     : name of the NCBI database to search, such as 'nuccore',
                     'protein', or 'gene' (Required).
@@ -265,8 +265,8 @@ USAGE:
                     database being queried (Optional).
   -m [INTEGER]    : the maximum number of records to return (Optional; default
                     is to return all matches satisfying the query).
-  -s              : request each record separately and save as a separate file. 
-                    This option is only supported for -r values of 'gb', 
+  -s              : request each record separately and save as a separate file.
+                    This option is only supported for -r values of 'gb'
                     and 'gbwithparts' (Optional).
   -v              : provide progress messages (Optional).
   -h              : show this message (Optional).

@@ -26,7 +26,7 @@ USAGE:
   -m [INTEGER]    : the maximum number of records to return (Optional; default
                     is to return all matches satisfying the query).
   -s              : request each record separately and save as a separate file. 
-                    This option is only supported for -r values of 'gb', 
+                    This option is only supported for -r values of 'gb'
                     and 'gbwithparts' (Optional).
   -v              : provide progress messages (Optional).
   -h              : show this message (Optional).
