@@ -13,18 +13,18 @@ use LWP::UserAgent;
 use HTTP::Request::Common;
 
 my %param = (
-    query         => undef,
-    output_file   => undef,
-    database      => undef,
-    return_type   => '',
-    max_records   => undef,
-    format        => undef,
-    verbose       => undef,
-    split_records => undef,
-    url           => 'https://www.ncbi.nlm.nih.gov/entrez/eutils',
-    retries       => 0,
-    max_retries   => 5,
-    help          => undef
+    query       => undef,
+    output_file => undef,
+    database    => undef,
+    return_type => '',
+    max_records => undef,
+    format      => undef,
+    verbose     => undef,
+    separate    => undef,
+    url         => 'https://www.ncbi.nlm.nih.gov/entrez/eutils',
+    retries     => 0,
+    max_retries => 5,
+    help        => undef
 );
 
 Getopt::Long::Configure('bundling');
@@ -34,7 +34,7 @@ GetOptions(
     'd|database=s'    => \$param{database},
     'r|return_type=s' => \$param{return_type},
     'm|max_records=i' => \$param{max_records},
-    's|split'         => \$param{split_records},
+    's|separate'      => \$param{separate},
     'verbose|v'       => \$param{verbose},
     'h|help'          => \$param{help}
 );
@@ -57,7 +57,7 @@ $param{return_type} = lc( $param{return_type} );
 $param{query} = uri_escape( $param{query} );
 
 # Set up for the -split option
-if ( $param{split_records} ) {
+if ( $param{separate} ) {
     if (   ( $param{return_type} eq 'gb' )
         || ( $param{return_type} eq 'gbwithparts' ) )
     {
@@ -69,9 +69,9 @@ if ( $param{split_records} ) {
 
     }
     else {
-        $param{split_records} = 0;
+        $param{separate} = 0;
         print
-"-return_type is not 'gb' or 'gbwithparts', so the --split option will be ignored.\n";
+"-r is not 'gb' or 'gbwithparts', so the -s option will be ignored.\n";
     }
 }
 
@@ -144,7 +144,7 @@ m/<Count>(\d+)<\/Count>.*<QueryKey>(\d+)<\/QueryKey>.*<WebEnv>(\S+)<\/WebEnv>/s;
 
     my $retmax = 500;
 
-    if ( $param{split_records} ) {
+    if ( $param{separate} ) {
         $retmax = 1;
     }
 
@@ -153,7 +153,7 @@ m/<Count>(\d+)<\/Count>.*<QueryKey>(\d+)<\/QueryKey>.*<WebEnv>(\S+)<\/WebEnv>/s;
     }
 
     my $OUTFILE;
-    if ( !$param{split_records} ) {
+    if ( !$param{separate} ) {
         open( $OUTFILE, ">" . $param{output_file} )
           or die("Error: Cannot open $param{output_file} : $!");
     }
@@ -195,9 +195,9 @@ m/<Count>(\d+)<\/Count>.*<QueryKey>(\d+)<\/QueryKey>.*<WebEnv>(\S+)<\/WebEnv>/s;
         }
 
         $efetch_result =~ s/[^[:ascii:]]+//g;
-        if ( $param{split_records} ) {
+        if ( $param{separate} ) {
             my $record_num = $retstart + 1;
-            write_split_record( $efetch_result, $record_num );
+            write_separate_record( $efetch_result, $record_num );
         }
         else {
             print( $OUTFILE $efetch_result );
@@ -206,22 +206,29 @@ m/<Count>(\d+)<\/Count>.*<QueryKey>(\d+)<\/QueryKey>.*<WebEnv>(\S+)<\/WebEnv>/s;
         unless (
             ( defined( $param{max_records} ) && ( $param{max_records} == 1 ) ) )
         {
-            sleep(3);
+            sleep(1);
         }
     }
 
-    if ( !$param{split_records} ) {
+    if ( !$param{separate} ) {
         close($OUTFILE)
           or die("Error: Cannot close $param{output_file} file: $!");
     }
 }
 
-sub write_split_record {
+sub write_separate_record {
     my $record     = shift;
     my $record_num = shift;
     if ( $record =~ /ACCESSION\s+(\S+)/ ) {
         my $accession = $1;
-        open( my $RECORD_FILE, ">" . $param{output_file} . "/$accession.gbk" );
+        my $filename  = $param{output_file} . "/$accession.gbk";
+        my $count     = 0;
+        while ( -e $filename ) {
+            $filename =
+              $param{output_file} . "/$accession" . '_' . "$count.gbk";
+            $count++;
+        }
+        open( my $RECORD_FILE, ">" . $filename );
         print( $RECORD_FILE $record );
         close($RECORD_FILE);
     }
@@ -258,10 +265,9 @@ USAGE:
                     database being queried (Optional).
   -m [INTEGER]    : the maximum number of records to return (Optional; default
                     is to return all matches satisfying the query).
-  -s              : return each record as a separate file, using the accession
-                    of the record as the filename. This option is only
-                    supported for -r values of 'gb' and 'gbwithparts'
-                    (Optional).
+  -s              : request each record separately and save as a separate file. 
+                    This option is only supported for -r values of 'gb', 
+                    and 'gbwithparts' (Optional).
   -v              : provide progress messages (Optional).
   -h              : show this message (Optional).
 

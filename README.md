@@ -25,10 +25,9 @@ USAGE:
                     database being queried (Optional).
   -m [INTEGER]    : the maximum number of records to return (Optional; default
                     is to return all matches satisfying the query).
-  -s              : return each record as a separate file, using the accession
-                    of the record as the filename. This option is only
-                    supported for -r values of 'gb' and 'gbwithparts'
-                    (Optional).
+  -s              : request each record separately and save as a separate file. 
+                    This option is only supported for -r values of 'gb', 
+                    and 'gbwithparts' (Optional).
   -v              : provide progress messages (Optional).
   -h              : show this message (Optional).
 ```
@@ -69,7 +68,7 @@ perl ncbi_search.pl -q 'NC_009925:NC_009934[Accession]' \
 -v
 ```
 
-Download 5 coronavirus genomes from the RefSeq collection, and save each
+Download five coronavirus genomes from the RefSeq collection, and save each
 genome to a separate file:
 
 ```bash
@@ -82,7 +81,7 @@ perl ncbi_search.pl -q 'coronavirus[Organism] AND nucleotide genome[Filter] AND 
 -v
 ```
 
-Download 5 abstracts from PubMed using an author name:
+Download five abstracts from PubMed using an author name:
 
 ```bash
 perl ncbi_search.pl -q 'Stothard P[Author]' \
