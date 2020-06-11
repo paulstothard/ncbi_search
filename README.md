@@ -160,47 +160,47 @@ sequences.fasta
 ___
 ### Supported -d option values:
 
-* pubmed  
-* protein  
-* nuccore  
-* ipg  
-* nucleotide  
-* structure  
-* sparcle  
-* genome  
 * annotinfo  
 * assembly  
 * bioproject  
 * biosample  
+* biosystems  
 * blastdbinfo  
 * books  
 * cdd  
 * clinvar  
+* dbvar  
 * gap  
 * gapplus  
-* grasp  
-* dbvar  
-* gene  
 * gds  
+* gene  
+* genome  
 * geoprofiles  
+* grasp  
 * homologene  
+* ipg  
 * medgen  
 * mesh  
 * ncbisearch  
 * nlmcatalog  
+* nuccore  
+* nucleotide  
 * omim  
 * orgtrack  
+* pcassay  
+* pccompound  
+* pcsubstance  
 * pmc  
 * popset  
 * probe  
+* protein  
 * proteinclusters  
-* pcassay  
-* biosystems  
-* pccompound  
-* pcsubstance  
+* pubmed  
 * seqannot  
 * snp  
+* sparcle  
 * sra  
+* structure  
 * taxonomy  
 
 ___
