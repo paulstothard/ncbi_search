@@ -1,6 +1,6 @@
-# ncbi_search
+# ncbi\_search
 
-FILE: ncbi_search.pl  
+FILE: ncbi\_search.pl  
 AUTH: Paul Stothard <stothard@ualberta.ca>  
 DATE: April 18, 2020  
 VERS: 1.2
@@ -236,7 +236,7 @@ The supported -r option values are grouped by database type (i.e. -d option valu
 ##### d = gene
 
 - text ASN.1 (_null_)
-- Gene table (gene_table)
+- Gene table (gene\_table)
 
 ##### d = homologene
 
@@ -273,8 +273,8 @@ The supported -r option values are grouped by database type (i.e. -d option valu
 ##### Additional options for d = nuccore
 
 - GenBank flat file with full sequence (gbwithparts)
-- CDS nucleotide FASTA (fasta_cds_na)
-- CDS protein FASTA (fasta_cds_aa)
+- CDS nucleotide FASTA (fasta\_cds\_na)
+- CDS protein FASTA (fasta\_cds\_aa)
 
 ##### Additional option for d = nucest
 
