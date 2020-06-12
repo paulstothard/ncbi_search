@@ -1,5 +1,6 @@
-# ncbi\_search
-FILE: ncbi\_search.pl  
+# ncbi_search
+
+FILE: ncbi_search.pl  
 AUTH: Paul Stothard <stothard@ualberta.ca>  
 DATE: April 18, 2020  
 VERS: 1.2
@@ -25,7 +26,7 @@ USAGE:
                     database being queried (Optional).
   -m [INTEGER]    : the maximum number of records to return (Optional; default
                     is to return all matches satisfying the query).
-  -s              : request each record separately and save as a separate file. 
+  -s              : request each record separately and save as a separate file.
                     This option is only supported for -r values of 'gb'
                     and 'gbwithparts' (Optional).
   -v              : provide progress messages (Optional).
@@ -121,6 +122,7 @@ perl ncbi_search.pl -q '17[Chromosome] AND 7614064:7620000[Base Position]' \
 -r clinvarset \
 -v
 ```
+
 Download a sequence record for each accession number in a file of accession
 numbers:
 
@@ -157,155 +159,181 @@ awk '/^>/ {OUT=substr($0,2); split(OUT, a, " "); sub(/[^A-Za-z_0-9\.\-]/, "", a[
 sequences.fasta
 ```
 
-___
+---
+
 ### Supported -d option values:
 
-* annotinfo  
-* assembly  
-* bioproject  
-* biosample  
-* biosystems  
-* blastdbinfo  
-* books  
-* cdd  
-* clinvar  
-* dbvar  
-* gap  
-* gapplus  
-* gds  
-* gene  
-* genome  
-* geoprofiles  
-* grasp  
-* homologene  
-* ipg  
-* medgen  
-* mesh  
-* ncbisearch  
-* nlmcatalog  
-* nuccore  
-* nucleotide  
-* omim  
-* orgtrack  
-* pcassay  
-* pccompound  
-* pcsubstance  
-* pmc  
-* popset  
-* probe  
-* protein  
-* proteinclusters  
-* pubmed  
-* seqannot  
-* snp  
-* sparcle  
-* sra  
-* structure  
-* taxonomy  
+- annotinfo
+- assembly
+- bioproject
+- biosample
+- biosystems
+- blastdbinfo
+- books
+- cdd
+- clinvar
+- dbvar
+- gap
+- gapplus
+- gds
+- gene
+- genome
+- geoprofiles
+- grasp
+- homologene
+- ipg
+- medgen
+- mesh
+- ncbisearch
+- nlmcatalog
+- nuccore
+- nucleotide
+- omim
+- orgtrack
+- pcassay
+- pccompound
+- pcsubstance
+- pmc
+- popset
+- probe
+- protein
+- proteinclusters
+- pubmed
+- seqannot
+- snp
+- sparcle
+- sra
+- structure
+- taxonomy
 
-___
+---
+
 ### Supported -r option values:
 
-The supported -r option values are grouped by database type (i.e. -d option value) below. The name of each format is followed by the corresponding -r option value in parentheses. A value of _null_ indicates that the -r option should be omitted in order to obtain that output format.  
+The supported -r option values are grouped by database type (i.e. -d option value) below. The name of each format is followed by the corresponding -r option value in parentheses. A value of _null_ indicates that the -r option should be omitted in order to obtain that output format.
 
-#####  All Databases  
-  * Document summary (docsum)  
-  * List of UIDs in plain text (uilist)  
+##### All Databases
 
-#####  d = bioproject  
-  * Full record XML (xml)  
+- Document summary (docsum)
+- List of UIDs in plain text (uilist)
 
-#####  d = biosample  
-  * Full record text (full)  
+##### d = bioproject
 
-#####  d = biosystems  
-  * Full record XML (xml)  
+- Full record XML (xml)
 
-#####  d = gds  
-  * Summary (summary)  
+##### d = biosample
 
-#####  d = gene  
-  * text ASN.1 (_null_)  
-  * Gene table (gene_table)  
+- Full record text (full)
 
-#####  d = homologene  
-  * text ASN.1 (_null_)  
-  * Alignment scores (alignmentscores)  
-  * FASTA (fasta)  
-  * HomoloGene (homologene)  
+##### d = biosystems
 
-#####  d = mesh  
-  * Full record (full)  
+- Full record XML (xml)
 
-#####  d = nlmcatalog  
-  * Full record (_null_)  
+##### d = gds
 
-#####  d = nuccore, nucest, nucgss, protein or popset  
-  * text ASN.1 (_null_)  
-  * Full record in XML (native)  
-  * Accession number(s) (acc)  
-  * FASTA (fasta)  
-  * SeqID string (seqid)  
+- Summary (summary)
 
-#####  Additional options for d = nuccore, nucest, nucgss or popset  
-  * GenBank flat file (gb)  
-  * INSDSeq XML (gbc)  
+##### d = gene
 
-#####  Additional option for d = nuccore and protein  
-  * Feature table (ft)  
+- text ASN.1 (_null_)
+- Gene table (gene_table)
 
-#####  Additional options for d = nuccore  
-  * GenBank flat file with full sequence (gbwithparts)  
-  * CDS nucleotide FASTA (fasta_cds_na)  
-  * CDS protein FASTA (fasta_cds_aa)  
+##### d = homologene
 
-#####  Additional option for d = nucest  
-  * EST report (est)  
+- text ASN.1 (_null_)
+- Alignment scores (alignmentscores)
+- FASTA (fasta)
+- HomoloGene (homologene)
 
-#####  Additional option for d = nucgss  
-  * GSS report (gss)  
+##### d = mesh
 
-#####  Additional options for d = protein  
-  * GenPept flat file (gp)  
-  * INSDSeq XML (gpc)  
-  * Identical Protein XML (ipg)  
+- Full record (full)
 
-#####  d = pmc  
-  * XML (_null_)  
-  * MEDLINE (medline)  
+##### d = nlmcatalog
 
-#####  d = pubmed  
-  * text ASN.1 (_null_)  
-  * MEDLINE (medline)  
-  * PMID list (uilist)  
-  * Abstract (abstract)  
+- Full record (_null_)
 
-#####  d = sequences  
-  * text ASN.1 (_null_)  
-  * Accession number(s) (acc)  
-  * FASTA (fasta)  
-  * SeqID string (seqid)  
+##### d = nuccore, nucest, nucgss, protein or popset
 
-#####  d = snp  
-  * text ASN.1 (_null_)  
-  * Flat file (flt)  
-  * FASTA (fasta)  
-  * RS Cluster report (rsr)  
-  * SS Exemplar list (ssexemplar)  
-  * Chromosome report (chr)  
-  * Summary (docset)  
-  * UID list (uilist)  
+- text ASN.1 (_null_)
+- Full record in XML (native)
+- Accession number(s) (acc)
+- FASTA (fasta)
+- SeqID string (seqid)
 
-#####  d = sra  
-  * XML (full)  
+##### Additional options for d = nuccore, nucest, nucgss or popset
 
-#####  d = taxonomy  
-  * XML (_null_)  
-  * TaxID list (uilist)  
+- GenBank flat file (gb)
+- INSDSeq XML (gbc)
 
-#####  d = clinvar  
-  * ClinVar Set (clinvarset)  
-  * UID list (uilist)  
+##### Additional option for d = nuccore and protein
 
-#####  d = gtr  
-  * GTR Test Report (gtracc)  
+- Feature table (ft)
+
+##### Additional options for d = nuccore
+
+- GenBank flat file with full sequence (gbwithparts)
+- CDS nucleotide FASTA (fasta_cds_na)
+- CDS protein FASTA (fasta_cds_aa)
+
+##### Additional option for d = nucest
+
+- EST report (est)
+
+##### Additional option for d = nucgss
+
+- GSS report (gss)
+
+##### Additional options for d = protein
+
+- GenPept flat file (gp)
+- INSDSeq XML (gpc)
+- Identical Protein XML (ipg)
+
+##### d = pmc
+
+- XML (_null_)
+- MEDLINE (medline)
+
+##### d = pubmed
+
+- text ASN.1 (_null_)
+- MEDLINE (medline)
+- PMID list (uilist)
+- Abstract (abstract)
+
+##### d = sequences
+
+- text ASN.1 (_null_)
+- Accession number(s) (acc)
+- FASTA (fasta)
+- SeqID string (seqid)
+
+##### d = snp
+
+- text ASN.1 (_null_)
+- Flat file (flt)
+- FASTA (fasta)
+- RS Cluster report (rsr)
+- SS Exemplar list (ssexemplar)
+- Chromosome report (chr)
+- Summary (docset)
+- UID list (uilist)
+
+##### d = sra
+
+- XML (full)
+
+##### d = taxonomy
+
+- XML (_null_)
+- TaxID list (uilist)
+
+##### d = clinvar
+
+- ClinVar Set (clinvarset)
+- UID list (uilist)
+
+##### d = gtr
+
+- GTR Test Report (gtracc)
