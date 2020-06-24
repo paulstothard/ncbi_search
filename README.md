@@ -12,25 +12,57 @@ the IDs of the records.
 For additional information on NCBI's Entrez Programming Utilities see:
 <https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch>
 
-```
-USAGE:
-   perl ncbi_search.pl [-arguments]
+This script requires the `LWP::Protocol::https` Perl modules. This can be installed using CPAN, e.g.:
 
-  -q [STRING]     : Entrez query text (Required).
-  -o [FILE]       : output file to create (Required). If the -s option is used,
-                    this is the output directory to create.
-  -d [STRING]     : name of the NCBI database to search, such as 'nuccore',
-                    'protein', or 'gene' (Required).
-  -r [STRING]     : the type of information to download. For sequences, 'fasta'
-                    is typically specified. The accepted formats depend on the
-                    database being queried (Optional).
-  -m [INTEGER]    : the maximum number of records to return (Optional; default
-                    is to return all matches satisfying the query).
-  -s              : request each record separately and save as a separate file.
-                    This option is only supported for -r values of 'gb'
-                    and 'gbwithparts' (Optional).
-  -v              : provide progress messages (Optional).
-  -h              : show this message (Optional).
+```
+sudo perl -MCPAN -e "install LWP::Protocol::https"
+```
+
+## Usage
+
+```
+ncbi_search.pl - search NCBI databases.
+
+DISPLAY HELP AND EXIT:
+
+usage:
+
+  perl ncbi_search.pl -help
+
+PERFORM NCBI SEARCH
+
+usage:
+
+  perl ncbi_search.pl -q <string> -o <file> -d <string> [Options]
+
+required arguments:
+
+-q - Entrez query text.
+
+-o - Output file to create. If the -s option is used this is the output
+directory to create.
+
+-d - Name of the NCBI database to search, such as 'nuccore', 'protein', or
+'gene'.
+
+optional arguments:
+
+-r - Type of information to download. For sequences, 'fasta' is typically
+specified. The accepted formats depend on the database being queried. The
+default is to specify no format.
+  
+-m - The maximum number of records to download. Default is to download all
+records.
+  
+-s - Save each record as a separate file. This option is only supported for -r
+values of 'gb' and 'gbwithparts'.
+
+-v - Provide progress messages.
+
+example usage:
+
+  perl ncbi_search.pl -q 'NC_045512[Accession]' -o NC_045512.gbk -d nuccore \
+  -r gbwithparts
 ```
 
 ### Example usage:
