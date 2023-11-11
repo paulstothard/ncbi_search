@@ -66,7 +66,7 @@ example usage:
   -r gbwithparts
 ```
 
-### Example usage:
+### Example usage
 
 Download a sequence in GenBank format (with the full sequence included), using
 an accession number:
@@ -194,7 +194,7 @@ sequences.fasta
 
 ---
 
-### Supported -d option values:
+### Supported -d option values
 
 - annotinfo
 - assembly
@@ -241,52 +241,52 @@ sequences.fasta
 
 ---
 
-### Supported -r option values:
+### Supported -r option values
 
 The supported -r option values are grouped by database type (i.e. -d option value) below. The name of each format is followed by the corresponding -r option value in parentheses. A value of _null_ indicates that the -r option should be omitted in order to obtain that output format.
 
-##### All Databases
+#### All Databases
 
 - Document summary (docsum)
 - List of UIDs in plain text (uilist)
 
-##### d = bioproject
+#### d = bioproject
 
 - Full record XML (xml)
 
-##### d = biosample
+#### d = biosample
 
 - Full record text (full)
 
-##### d = biosystems
+#### d = biosystems
 
 - Full record XML (xml)
 
-##### d = gds
+#### d = gds
 
 - Summary (summary)
 
-##### d = gene
+#### d = gene
 
 - text ASN.1 (_null_)
 - Gene table (gene\_table)
 
-##### d = homologene
+#### d = homologene
 
 - text ASN.1 (_null_)
 - Alignment scores (alignmentscores)
 - FASTA (fasta)
 - HomoloGene (homologene)
 
-##### d = mesh
+#### d = mesh
 
 - Full record (full)
 
-##### d = nlmcatalog
+#### d = nlmcatalog
 
 - Full record (_null_)
 
-##### d = nuccore, nucest, nucgss, protein or popset
+#### d = nuccore, nucest, nucgss, protein or popset
 
 - text ASN.1 (_null_)
 - Full record in XML (native)
@@ -294,55 +294,55 @@ The supported -r option values are grouped by database type (i.e. -d option valu
 - FASTA (fasta)
 - SeqID string (seqid)
 
-##### Additional options for d = nuccore, nucest, nucgss or popset
+#### Additional options for d = nuccore, nucest, nucgss or popset
 
 - GenBank flat file (gb)
 - INSDSeq XML (gbc)
 
-##### Additional option for d = nuccore and protein
+#### Additional option for d = nuccore and protein
 
 - Feature table (ft)
 
-##### Additional options for d = nuccore
+#### Additional options for d = nuccore
 
 - GenBank flat file with full sequence (gbwithparts)
 - CDS nucleotide FASTA (fasta\_cds\_na)
 - CDS protein FASTA (fasta\_cds\_aa)
 
-##### Additional option for d = nucest
+#### Additional option for d = nucest
 
 - EST report (est)
 
-##### Additional option for d = nucgss
+#### Additional option for d = nucgss
 
 - GSS report (gss)
 
-##### Additional options for d = protein
+#### Additional options for d = protein
 
 - GenPept flat file (gp)
 - INSDSeq XML (gpc)
 - Identical Protein XML (ipg)
 
-##### d = pmc
+#### d = pmc
 
 - XML (_null_)
 - MEDLINE (medline)
 
-##### d = pubmed
+#### d = pubmed
 
 - text ASN.1 (_null_)
 - MEDLINE (medline)
 - PMID list (uilist)
 - Abstract (abstract)
 
-##### d = sequences
+#### d = sequences
 
 - text ASN.1 (_null_)
 - Accession number(s) (acc)
 - FASTA (fasta)
 - SeqID string (seqid)
 
-##### d = snp
+#### d = snp
 
 - text ASN.1 (_null_)
 - Flat file (flt)
@@ -353,20 +353,20 @@ The supported -r option values are grouped by database type (i.e. -d option valu
 - Summary (docset)
 - UID list (uilist)
 
-##### d = sra
+#### d = sra
 
 - XML (full)
 
-##### d = taxonomy
+#### d = taxonomy
 
 - XML (_null_)
 - TaxID list (uilist)
 
-##### d = clinvar
+#### d = clinvar
 
 - ClinVar Set (clinvarset)
 - UID list (uilist)
 
-##### d = gtr
+#### d = gtr
 
 - GTR Test Report (gtracc)
