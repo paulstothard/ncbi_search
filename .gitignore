@@ -1,2 +1,7 @@
+deploy
 .DS_Store
-test/
+test_output/
+.vscode/*
+.history/
+*.vsix
+*.code-workspace

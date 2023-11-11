@@ -12,15 +12,16 @@ the IDs of the records.
 For additional information on NCBI's Entrez Programming Utilities see:
 <https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch>
 
-This script requires the `LWP::Protocol::https` Perl modules. This can be installed using CPAN, e.g.:
+This script requires the `LWP::Protocol::https` Perl module. This can be
+installed using conda:
 
-```
-sudo perl -MCPAN -e "install LWP::Protocol::https"
+```bash
+conda install -c bioconda perl-lwp-protocol-https
 ```
 
 ## Usage
 
-```
+```text
 ncbi_search.pl - search NCBI databases.
 
 DISPLAY HELP AND EXIT:
@@ -160,11 +161,11 @@ numbers:
 
 ```bash
 #preparing sample file of accession numbers
-echo $'NP_776246.1\nNP_001073369.1\nXP_006724594.1\nNP_995328.2\nNP_115906.3\n' \
+echo $'NP_776246.1\nNP_001073369.1\nNP_995328.2\n' \
 > accessions.txt
 
 #performing search for each accession using xargs
-cat accessions.txt | xargs -t -I{} \
+< accessions.txt xargs -t -I{} \
 perl ncbi_search.pl -q '{}[Accession]' \
 -o {}.fasta \
 -d protein \
@@ -185,7 +186,7 @@ perl ncbi_search.pl -q 'coronavirus[Organism] AND nucleotide genome[Filter] AND 
 -v
 
 #create separate file for each sequence
-outputdir=output_directory/
+outputdir=sequences/
 mkdir -p "$outputdir"
 awk '/^>/ {OUT=substr($0,2); split(OUT, a, " "); sub(/[^A-Za-z_0-9\.\-]/, "", a[1]); OUT = "'"$outputdir"'" a[1] ".fa"}; OUT {print >>OUT; close(OUT)}' \
 sequences.fasta
