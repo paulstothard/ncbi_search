@@ -58,7 +58,7 @@ perl ncbi_search.pl -q '17[Chromosome] AND 7614064:7620000[Base Position]' \
 -r clinvarset \
 -v
 
-echo $'NP_776246.1\nNP_001073369.1\nNP_995328.2\n' \
+printf 'NP_776246.1\nNP_001073369.1\nNP_995328.2\n' \
 > "$outdir"accessions.txt
 
 < "$outdir"accessions.txt xargs -t -I{} \
@@ -80,4 +80,3 @@ outputdir="$outdir"sequences/
 mkdir -p "$outputdir"
 awk '/^>/ {OUT=substr($0,2); split(OUT, a, " "); sub(/[^A-Za-z_0-9\.\-]/, "", a[1]); OUT = "'"$outputdir"'" a[1] ".fa"}; OUT {print >>OUT; close(OUT)}' \
 "$outdir"sequences.fasta
-
