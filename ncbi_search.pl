@@ -21,6 +21,7 @@ my %param = (
     format      => undef,
     verbose     => undef,
     separate    => undef,
+    sort        => undef,
     url         => 'https://www.ncbi.nlm.nih.gov/entrez/eutils',
     retries     => 0,
     max_retries => 5,
@@ -35,6 +36,7 @@ GetOptions(
     'r|return_type=s' => \$param{return_type},
     'm|max_records=i' => \$param{max_records},
     's|separate'      => \$param{separate},
+    'a|arrange=s'     => \$param{sort},
     'verbose|v'       => \$param{verbose},
     'h|help'          => \$param{help}
 );
@@ -75,13 +77,19 @@ if ( $param{separate} ) {
     }
 }
 
+# Sort by Default order if not defined
+if ( !( defined( $param{sort} ) ) ) {
+  $param{sort} = 'none';
+}
+
+
 search(%param);
 
 sub search {
     my %param = @_;
 
     my $esearch = "$param{url}/esearch.fcgi?db=$param{database}"
-      . "&retmax=1&usehistory=y&term=$param{query}";
+      . "&retmax=1&usehistory=y&term=$param{query}&Sort=$param{sort}";
 
     my $ua = LWP::UserAgent->new(
         ssl_opts          => { verify_hostname => 0 },
@@ -177,7 +185,7 @@ m/<Count>(\d+)<\/Count>.*<QueryKey>(\d+)<\/QueryKey>.*<WebEnv>(\S+)<\/WebEnv>/s;
         }
 
         my $efetch =
-"$param{url}/efetch.fcgi?rettype=$param{return_type}&retmode=text&retstart=$retstart&retmax=$retmax&db=$param{database}&query_key=$query_key&WebEnv=$web_env";
+"$param{url}/efetch.fcgi?rettype=$param{return_type}&retmode=text&retstart=$retstart&retmax=$retmax&db=$param{database}&query_key=$query_key&WebEnv=$web_env&Sort=$param{sort}";
         my $efetch_response = $ua->get($efetch);
         my $efetch_result   = $efetch_response->decoded_content;
 
@@ -282,6 +290,17 @@ records.
   
 -s - Save each record as a separate file. This option is only supported for -r
 values of 'gb' and 'gbwithparts'.
+
+-a - Arrange by order
+
+Options are:
+    none - Default order
+    ACCN - Accession
+    MDAT - Date Modified
+    PDAT - Date Released
+    ORGN - Organism Name
+    TAXID - Taxonomy ID
+    SLEN - Sequence Length
 
 -v - Provide progress messages.
 
