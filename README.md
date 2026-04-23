@@ -1,19 +1,15 @@
-# ncbi\_search
+# ncbi_search
 
-FILE: ncbi\_search.pl  
+FILE: ncbi_search.pl  
 AUTH: Paul Stothard <stothard@ualberta.ca>  
-DATE: April 18, 2020  
-VERS: 1.2
+DATE: April 23, 2026  
+VERS: 1.3
 
-This script uses NCBI's Entrez Programming Utilities to perform searches of
-NCBI databases. This script can return either the complete database records, or
-the IDs of the records.
+This script uses NCBI's Entrez Programming Utilities to perform searches of NCBI databases. This script can return either the complete database records, or the IDs of the records.
 
-For additional information on NCBI's Entrez Programming Utilities see:
-<https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch>
+For additional information on NCBI's Entrez Programming Utilities see: <https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch>
 
-This script requires the `LWP::Protocol::https` Perl module. This can be
-installed using conda:
+This script requires the `LWP::Protocol::https` Perl module. This can be installed using conda:
 
 ```bash
 conda install -c bioconda perl-lwp-protocol-https
@@ -34,7 +30,7 @@ PERFORM NCBI SEARCH:
 
 usage:
 
-  perl ncbi_search.pl -q <string> -o <file> -d <string> [Options]
+  perl ncbi_search.pl -q <string> -o <file> -d <string> [options]
 
 required arguments:
 
@@ -51,10 +47,12 @@ optional arguments:
 -r - Type of information to download. For sequences, 'fasta' is typically
 specified. The accepted formats depend on the database being queried. The
 default is to specify no format.
-  
+
 -m - The maximum number of records to download. Default is to download all
 records.
-  
+
+--sort - Sort order for ESearch/EFetch. Default is 'none'.
+
 -s - Save each record as a separate file. This option is only supported for -r
 values of 'gb' and 'gbwithparts'.
 
@@ -64,12 +62,14 @@ example usage:
 
   perl ncbi_search.pl -q 'NC_045512[Accession]' -o NC_045512.gbk -d nuccore \
   -r gbwithparts
+
+  perl ncbi_search.pl -q 'txid2[Organism:exp]' -o out.fasta -d nuccore \
+  -r fasta -m 10 --sort accession
 ```
 
 ### Example usage
 
-Download a sequence in GenBank format (with the full sequence included), using
-an accession number:
+Download a sequence in GenBank format (with the full sequence included), using an accession number:
 
 ```bash
 perl ncbi_search.pl -q 'NC_045512[Accession]' \
@@ -79,8 +79,7 @@ perl ncbi_search.pl -q 'NC_045512[Accession]' \
 -v
 ```
 
-Download the protein sequences encoded by a genome, using the genome's
-accession number:
+Download the protein sequences encoded by a genome, using the genome's accession number:
 
 ```bash
 perl ncbi_search.pl -q 'NC_012920.1[Accession]' \
@@ -90,8 +89,7 @@ perl ncbi_search.pl -q 'NC_012920.1[Accession]' \
 -v
 ```
 
-Download multiple genomes using an accession number range, and save each genome
-to a file named after its accession number:
+Download multiple genomes using an accession number range, and save each genome to a file named after its accession number:
 
 ```bash
 perl ncbi_search.pl -q 'NC_009925:NC_009934[Accession]' \
@@ -102,8 +100,7 @@ perl ncbi_search.pl -q 'NC_009925:NC_009934[Accession]' \
 -v
 ```
 
-Download five coronavirus genomes from the RefSeq collection, and save each
-genome to a separate file:
+Download five coronavirus genomes from the RefSeq collection, and save each genome to a separate file:
 
 ```bash
 perl ncbi_search.pl -q 'coronavirus[Organism] AND nucleotide genome[Filter] AND refseq[Filter]' \
@@ -126,6 +123,18 @@ perl ncbi_search.pl -q 'Stothard P[Author]' \
 -v
 ```
 
+Download five abstracts from PubMed using an author name, sorted by publication date:
+
+```bash
+perl ncbi_search.pl -q 'Stothard P[Author]' \
+-o abstracts_sorted.txt \
+-d pubmed \
+-r abstract \
+-m 5 \
+--sort pub_date \
+-v
+```
+
 Download information on the genes located in a genome region of interest:
 
 ```bash
@@ -145,8 +154,7 @@ perl ncbi_search.pl -q 'homo sapiens[Organism] AND PRNP[Gene name]' \
 -v
 ```
 
-Download information about health-affecting variants for a genome region of
-interest:
+Download information about health-affecting variants for a genome region of interest:
 
 ```bash
 perl ncbi_search.pl -q '17[Chromosome] AND 7614064:7620000[Base Position]' \
@@ -156,15 +164,14 @@ perl ncbi_search.pl -q '17[Chromosome] AND 7614064:7620000[Base Position]' \
 -v
 ```
 
-Download a sequence record for each accession number in a file of accession
-numbers:
+Download a sequence record for each accession number in a file of accession numbers:
 
 ```bash
-#preparing sample file of accession numbers
+# preparing sample file of accession numbers
 echo $'NP_776246.1\nNP_001073369.1\nNP_995328.2\n' \
 > accessions.txt
 
-#performing search for each accession using xargs
+# performing search for each accession using xargs
 < accessions.txt xargs -t -I{} \
 perl ncbi_search.pl -q '{}[Accession]' \
 -o {}.fasta \
@@ -173,11 +180,10 @@ perl ncbi_search.pl -q '{}[Accession]' \
 -v
 ```
 
-Download sequences in fasta format and then save each sequence as a separate
-file:
+Download sequences in FASTA format and then save each sequence as a separate file:
 
 ```bash
-#download fasta file containing multiple sequences
+# download fasta file containing multiple sequences
 perl ncbi_search.pl -q 'coronavirus[Organism] AND nucleotide genome[Filter] AND refseq[Filter]' \
 -o sequences.fasta \
 -d nuccore \
@@ -185,7 +191,7 @@ perl ncbi_search.pl -q 'coronavirus[Organism] AND nucleotide genome[Filter] AND 
 -m 5 \
 -v
 
-#create separate file for each sequence
+# create separate file for each sequence
 outputdir=sequences/
 mkdir -p "$outputdir"
 awk '/^>/ {OUT=substr($0,2); split(OUT, a, " "); sub(/[^A-Za-z_0-9\.\-]/, "", a[1]); OUT = "'"$outputdir"'" a[1] ".fa"}; OUT {print >>OUT; close(OUT)}' \
@@ -269,7 +275,7 @@ The supported -r option values are grouped by database type (i.e. -d option valu
 #### d = gene
 
 - text ASN.1 (_null_)
-- Gene table (gene\_table)
+- Gene table (gene_table)
 
 #### d = homologene
 
@@ -306,8 +312,8 @@ The supported -r option values are grouped by database type (i.e. -d option valu
 #### Additional options for d = nuccore
 
 - GenBank flat file with full sequence (gbwithparts)
-- CDS nucleotide FASTA (fasta\_cds\_na)
-- CDS protein FASTA (fasta\_cds\_aa)
+- CDS nucleotide FASTA (fasta_cds_na)
+- CDS protein FASTA (fasta_cds_aa)
 
 #### Additional option for d = nucest
 
