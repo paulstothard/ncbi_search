@@ -338,7 +338,7 @@ DISPLAY HELP AND EXIT:
 
 usage:
 
-  perl ncbi_search.pl -help
+  perl ncbi_search.pl --help
 
 PERFORM NCBI SEARCH:
 
